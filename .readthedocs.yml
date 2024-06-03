@@ -1,6 +1,9 @@
 version: 2
 
-python:
+build:
+  os: ubuntu-latest
+  tools:
+  python:
    version: 3.8
    install:
       - method: pip
