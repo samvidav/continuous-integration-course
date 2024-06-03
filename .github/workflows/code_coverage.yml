@@ -1,8 +1,40 @@
-# This workflow will generate a code coverage report and upload to Codecov
+# This workflow will upload code coverage reports to Codecov
 
-- name: Upload coverage reports to Codecov
-  uses: codecov/codecov-action@v3
-  with:
-    token: ${{ secrets.CODECOV_TOKEN }}
-    fail_ci_if_error: true
-    files: coverage.xml
+name: Codecov
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.10"
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip setuptools wheel
+        python -m pip install .[dev]
+
+    -name: Run coverage report
+      run: |
+        python -m pytest --cov-config=.coveragerc --cov=./ci_course --cov-report=xml
+        cat coverage.xml
+
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        fail_ci_if_error: true
+        files: coverage.xml
