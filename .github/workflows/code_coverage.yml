@@ -27,7 +27,7 @@ jobs:
         python -m pip install --upgrade pip setuptools wheel
         python -m pip install .[dev]
 
-    -name: Run coverage report
+    - name: Run coverage report
       run: |
         python -m pytest --cov-config=.coveragerc --cov=./ci_course --cov-report=xml
         cat coverage.xml
