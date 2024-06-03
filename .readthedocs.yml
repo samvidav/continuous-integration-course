@@ -3,13 +3,13 @@ version: 2
 build:
   os: ubuntu-lts-latest
   tools:
-  python:
-   version: 3.8
-   install:
-      - method: pip
-        path: .
-        extra_requirements:
-            - docs
+    python:
+      version: 3.8
+      install:
+          - method: pip
+            path: .
+            extra_requirements:
+                - docs
 
 sphinx:
   builder: html
